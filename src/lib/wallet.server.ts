@@ -156,7 +156,39 @@ export function buildGenericObject(input: {
       value: input.valorQR,
       alternateText: input.numeroTarjeta,
     },
+    textModulesData: [
+      {
+        id: "titular",
+        header: "Nombre del titular de la tarjeta",
+        body: input.nombreCompleto,
+      },
+      {
+        id: "numero_tarjeta",
+        header: "Número de tarjeta BusCyL",
+        body: input.numeroTarjeta,
+      },
+    ],
+    linksModuleData: {
+      uris: [
+        {
+          uri: "https://www.buscyl.es",
+          description: "Web Buscyl",
+          id: "web_buscyl",
+        },
+        {
+          uri: "https://archive.org/download/rutasbonificadasbuscyl_202608/Rutas%2Bbonificadas%2B%20%282%29.pdf",
+          description: "Consulta las rutas bonificadas con Buscyl",
+          id: "rutas_bonificadas",
+        },
+        {
+          uri: "https://carreterasytransportes.jcyl.es/web/es/contactar-carreteras-transportes.html",
+          description: "Contacta a través de",
+          id: "contacto",
+        },
+      ],
+    },
     hexBackgroundColor: "#b9002a",
+
     heroImage: {
       sourceUri: {
         uri: "https://ia903205.us.archive.org/32/items/hero-image-buscyl-2/HERO%20IMAGE%20BUSCYL%20%282%29.png",
