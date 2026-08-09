@@ -59,10 +59,16 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-soft: var(--brand-soft);
 }
 
 :root {
   --radius: 0.625rem;
+  --brand: oklch(0.462 0.185 20.5);
+  --brand-foreground: oklch(0.99 0.005 60);
+  --brand-soft: oklch(0.945 0.03 20.5);
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
