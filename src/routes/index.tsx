@@ -8,6 +8,9 @@ import { Label } from "@/components/ui/label";
 import { createWalletPass } from "@/lib/wallet.functions";
 import saveToGooglePay from "@/assets/save-to-google-pay-es.svg";
 import buscylLogo from "@/assets/buscyl-logo.png.asset.json";
+import { AuthPanel } from "@/components/auth-panel";
+import { useAuth } from "@/contexts/auth-context";
+import { getIdToken } from "@/lib/authService";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -83,6 +86,8 @@ function Index() {
   const [valorQR, setValorQR] = useState("");
   const [saveUrl, setSaveUrl] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const { user, emailVerificado } = useAuth();
+  const puedeContinuar = Boolean(user) && emailVerificado;
 
   async function procesarArchivo(file: File) {
     setError("");
@@ -149,20 +154,31 @@ function Index() {
       setError("Revisa el número de tarjeta: deben ser 6 dígitos.");
       return;
     }
+    if (!puedeContinuar) {
+      setError("Inicia sesión con tu correo verificado para registrar la tarjeta.");
+      return;
+    }
     setEstado("generando");
     try {
+      const idToken = await getIdToken(true);
       const res = await createWalletPass({
         data: {
           nombreCompleto: nombre.trim().toUpperCase(),
           numeroTarjeta: numero.trim(),
           valorQR,
+          idToken,
         },
       });
       setSaveUrl(res.saveUrl);
       setEstado("listo");
     } catch (e) {
       console.error(e);
-      setError("No se ha podido generar el pase. Inténtalo de nuevo en unos minutos.");
+      const mensaje = (e as Error)?.message ?? "";
+      setError(
+        /tarjeta ya|acaba de ser|verificar tu correo|sesión ha caducado|Debes iniciar/i.test(mensaje)
+          ? mensaje
+          : "No se ha podido generar el pase. Inténtalo de nuevo en unos minutos.",
+      );
       setEstado("revision");
     }
   }
@@ -283,8 +299,15 @@ function Index() {
                     onChange={(e) => setNumero(e.target.value.replace(/\D/g, "").slice(0, 6))}
                   />
                 </div>
+                <div className="rounded-xl border border-border bg-muted/30 p-4">
+                  <AuthPanel />
+                </div>
                 <div className="flex flex-wrap gap-3 pt-1">
-                  <Button variant="brand" onClick={confirmar} disabled={estado === "generando"}>
+                  <Button
+                    variant="brand"
+                    onClick={confirmar}
+                    disabled={estado === "generando" || !puedeContinuar}
+                  >
                     {estado === "generando" ? (
                       <>
                         <Loader2 className="size-4 animate-spin" />
@@ -298,6 +321,11 @@ function Index() {
                     Cambiar imagen
                   </Button>
                 </div>
+                {!puedeContinuar ? (
+                  <p className="text-xs text-muted-foreground">
+                    Inicia sesión y verifica tu correo para registrar la tarjeta a tu nombre.
+                  </p>
+                ) : null}
               </div>
             </div>
           ) : null}
