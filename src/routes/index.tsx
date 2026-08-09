@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { Loader2, Upload, ScanLine, CheckCircle2, AlertCircle } from "lucide-react";
 
@@ -205,6 +205,13 @@ function Index() {
           <span className="text-sm/5 font-medium opacity-90">
             Junta de Castilla y León · Transporte
           </span>
+          <Link
+            to="/mis-tarjetas"
+            className="ml-auto rounded-full bg-white/15 px-3 py-1.5 text-sm font-medium hover:bg-white/25"
+          >
+            Mis tarjetas
+          </Link>
+
         </div>
       </header>
 
