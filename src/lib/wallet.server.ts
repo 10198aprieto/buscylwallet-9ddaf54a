@@ -224,3 +224,37 @@ export async function upsertPassAndBuildSaveUrl(input: {
 
   return `https://pay.google.com/gp/v/save/${saveJwt}`;
 }
+
+/** Vuelve a generar el enlace "Guardar en Google Wallet" de un pase ya existente. */
+export async function buildSaveUrlForExistingCard(numeroTarjeta: string): Promise<string> {
+  const { clientEmail, privateKey, issuerId } = getCredentials();
+  const objectId = `${issuerId}.${numeroTarjeta}`;
+  const token = await getAccessToken();
+
+  const res = await fetch(
+    `https://walletobjects.googleapis.com/walletobjects/v1/genericObject/${encodeURIComponent(objectId)}`,
+    { headers: { authorization: `Bearer ${token}` } },
+  );
+  if (res.status === 404) {
+    throw new Error("Este pase ya no existe en Google Wallet. Vuelve a subir la foto de la tarjeta.");
+  }
+  if (!res.ok) {
+    console.error("Wallet lookup error:", await res.text());
+    throw new Error("No se ha podido contactar con Google Wallet.");
+  }
+  const genericObject = (await res.json()) as Record<string, unknown>;
+
+  const key = await getKey(privateKey);
+  const saveJwt = await new SignJWT({
+    iss: clientEmail,
+    aud: "google",
+    typ: "savetowallet",
+    origins: [],
+    payload: { genericObjects: [{ id: genericObject["id"], classId: genericObject["classId"] }] },
+  })
+    .setProtectedHeader({ alg: "RS256", typ: "JWT" })
+    .setIssuedAt()
+    .sign(key);
+
+  return `https://pay.google.com/gp/v/save/${saveJwt}`;
+}
