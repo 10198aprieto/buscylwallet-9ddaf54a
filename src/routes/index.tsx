@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createWalletPass } from "@/lib/wallet.functions";
 import saveToGooglePay from "@/assets/save-to-google-pay-es.svg";
+import buscylLogo from "@/assets/buscyl-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
