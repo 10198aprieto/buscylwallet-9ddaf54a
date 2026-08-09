@@ -283,8 +283,15 @@ function Index() {
                     onChange={(e) => setNumero(e.target.value.replace(/\D/g, "").slice(0, 6))}
                   />
                 </div>
+                <div className="rounded-xl border border-border bg-muted/30 p-4">
+                  <AuthPanel />
+                </div>
                 <div className="flex flex-wrap gap-3 pt-1">
-                  <Button variant="brand" onClick={confirmar} disabled={estado === "generando"}>
+                  <Button
+                    variant="brand"
+                    onClick={confirmar}
+                    disabled={estado === "generando" || !puedeContinuar}
+                  >
                     {estado === "generando" ? (
                       <>
                         <Loader2 className="size-4 animate-spin" />
@@ -298,6 +305,11 @@ function Index() {
                     Cambiar imagen
                   </Button>
                 </div>
+                {!puedeContinuar ? (
+                  <p className="text-xs text-muted-foreground">
+                    Inicia sesión y verifica tu correo para registrar la tarjeta a tu nombre.
+                  </p>
+                ) : null}
               </div>
             </div>
           ) : null}
