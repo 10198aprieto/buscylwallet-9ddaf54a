@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createWalletPass } from "@/lib/wallet.functions";
 import saveToGooglePay from "@/assets/save-to-google-pay-es.svg";
+import buscylLogo from "@/assets/buscyl-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -180,14 +181,17 @@ function Index() {
     <div className="min-h-screen bg-background">
       <header className="bg-brand text-brand-foreground">
         <div className="mx-auto flex max-w-3xl items-center gap-3 px-5 py-5">
-          <span className="rounded-md bg-brand-foreground/15 px-2.5 py-1 text-sm font-black tracking-tight">
-            BusCyL
-          </span>
+          <img
+            src={buscylLogo.url}
+            alt="Logo BusCyL"
+            className="size-10 rounded-lg object-cover"
+          />
           <span className="text-sm/5 font-medium opacity-90">
             Junta de Castilla y León · Transporte
           </span>
         </div>
       </header>
+
 
       <main className="mx-auto max-w-3xl px-5 pb-20 pt-10">
         <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
