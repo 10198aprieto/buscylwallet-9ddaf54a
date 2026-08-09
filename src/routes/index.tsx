@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createWalletPass } from "@/lib/wallet.functions";
+import saveToGooglePay from "@/assets/save-to-google-pay-es.svg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -308,10 +309,15 @@ function Index() {
                   {nombre} · Tarjeta {numero}
                 </p>
               </div>
-              <a href={saveUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                href={saveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block transition-transform hover:scale-[1.02]"
+              >
                 <img
-                  src="https://developers.google.com/static/wallet/images/branding/es_add_to_google_wallet_add-wallet-badge.png"
-                  alt="Añadir a Google Wallet"
+                  src={saveToGooglePay}
+                  alt="Guardar en Google Pay"
                   className="h-14 w-auto"
                 />
               </a>
