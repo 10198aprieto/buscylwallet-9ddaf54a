@@ -149,20 +149,31 @@ function Index() {
       setError("Revisa el número de tarjeta: deben ser 6 dígitos.");
       return;
     }
+    if (!puedeContinuar) {
+      setError("Inicia sesión con tu correo verificado para registrar la tarjeta.");
+      return;
+    }
     setEstado("generando");
     try {
+      const idToken = await getIdToken(true);
       const res = await createWalletPass({
         data: {
           nombreCompleto: nombre.trim().toUpperCase(),
           numeroTarjeta: numero.trim(),
           valorQR,
+          idToken,
         },
       });
       setSaveUrl(res.saveUrl);
       setEstado("listo");
     } catch (e) {
       console.error(e);
-      setError("No se ha podido generar el pase. Inténtalo de nuevo en unos minutos.");
+      const mensaje = (e as Error)?.message ?? "";
+      setError(
+        /tarjeta ya|acaba de ser|verificar tu correo|sesión ha caducado|Debes iniciar/i.test(mensaje)
+          ? mensaje
+          : "No se ha podido generar el pase. Inténtalo de nuevo en unos minutos.",
+      );
       setEstado("revision");
     }
   }
