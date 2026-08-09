@@ -8,6 +8,9 @@ import { Label } from "@/components/ui/label";
 import { createWalletPass } from "@/lib/wallet.functions";
 import saveToGooglePay from "@/assets/save-to-google-pay-es.svg";
 import buscylLogo from "@/assets/buscyl-logo.png.asset.json";
+import { AuthPanel } from "@/components/auth-panel";
+import { useAuth } from "@/contexts/auth-context";
+import { getIdToken } from "@/lib/authService";
 
 export const Route = createFileRoute("/")({
   head: () => ({
