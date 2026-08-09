@@ -4,13 +4,30 @@ const ISSUER_ID = "3388000000023186156";
 const CLASS_SUFFIX = "buscyl_class";
 
 function getCredentials() {
+  const issuerId = process.env["GOOGLE_ISSUER_ID"] || ISSUER_ID;
+
+  // Preferred: full service-account JSON in GOOGLE_SERVICE_ACCOUNT_KEY.
+  const saJson = process.env["GOOGLE_SERVICE_ACCOUNT_KEY"];
+  if (saJson && saJson.trim().startsWith("{")) {
+    const parsed = JSON.parse(saJson.trim()) as {
+      client_email?: string;
+      private_key?: string;
+    };
+    if (parsed.client_email && parsed.private_key) {
+      return {
+        clientEmail: parsed.client_email,
+        privateKey: parsed.private_key.replace(/\\n/g, "\n").trim(),
+        issuerId,
+      };
+    }
+  }
+
+  // Fallback: separate email + private key secrets.
   const clientEmail = process.env["GOOGLE_CLIENT_EMAIL"];
   const rawKey = process.env["GOOGLE_PRIVATE_KEY"];
-  const issuerId = process.env["GOOGLE_ISSUER_ID"] || ISSUER_ID;
   if (!clientEmail || !rawKey) {
     throw new Error("Faltan las credenciales de la cuenta de servicio de Google.");
   }
-  // Support keys stored with escaped newlines or as a full service-account JSON blob.
   let privateKey = rawKey;
   const trimmed = rawKey.trim();
   if (trimmed.startsWith("{")) {
@@ -20,6 +37,56 @@ function getCredentials() {
   privateKey = privateKey.replace(/\\n/g, "\n").trim();
   return { clientEmail, privateKey, issuerId };
 }
+
+export async function ensureGenericClass(): Promise<{ created: boolean; classId: string }> {
+  const { issuerId } = getCredentials();
+  const classId = `${issuerId}.${CLASS_SUFFIX}`;
+  const token = await getAccessToken();
+  const base = "https://walletobjects.googleapis.com/walletobjects/v1/genericClass";
+
+  const existing = await fetch(`${base}/${encodeURIComponent(classId)}`, {
+    headers: { authorization: `Bearer ${token}` },
+  });
+  if (existing.ok) return { created: false, classId };
+  if (existing.status !== 404) {
+    console.error("Wallet class lookup error:", await existing.text());
+    throw new Error("No se ha podido consultar la clase del pase en Google Wallet.");
+  }
+
+  const genericClass = {
+    id: classId,
+    issuerName: "BusCyL - Junta de Castilla y León",
+    reviewStatus: "UNDER_REVIEW",
+    classTemplateInfo: {
+      cardTemplateOverride: {
+        cardRowTemplateInfos: [
+          {
+            twoItems: {
+              startItem: {
+                firstValue: { fields: [{ fieldPath: "object.subheader" }] },
+              },
+              endItem: {
+                firstValue: { fields: [{ fieldPath: "object.barcode.alternateText" }] },
+              },
+            },
+          },
+        ],
+      },
+    },
+  };
+
+  const created = await fetch(base, {
+    method: "POST",
+    headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+    body: JSON.stringify(genericClass),
+  });
+  if (!created.ok && created.status !== 409) {
+    console.error("Wallet class insert error:", await created.text());
+    throw new Error("No se ha podido crear la clase del pase en Google Wallet.");
+  }
+  return { created: true, classId };
+}
+
 
 async function getKey(privateKey: string) {
   return importPKCS8(privateKey, "RS256");
@@ -109,6 +176,7 @@ export async function upsertPassAndBuildSaveUrl(input: {
   const { clientEmail, privateKey, issuerId } = getCredentials();
   const genericObject = buildGenericObject({ ...input, issuerId });
 
+  await ensureGenericClass();
   const token = await getAccessToken();
   const base = "https://walletobjects.googleapis.com/walletobjects/v1/genericObject";
   const objectId = encodeURIComponent(genericObject.id);
