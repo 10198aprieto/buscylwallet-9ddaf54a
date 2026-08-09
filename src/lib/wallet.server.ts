@@ -176,6 +176,7 @@ export async function upsertPassAndBuildSaveUrl(input: {
   const { clientEmail, privateKey, issuerId } = getCredentials();
   const genericObject = buildGenericObject({ ...input, issuerId });
 
+  await ensureGenericClass();
   const token = await getAccessToken();
   const base = "https://walletobjects.googleapis.com/walletobjects/v1/genericObject";
   const objectId = encodeURIComponent(genericObject.id);
