@@ -2,29 +2,15 @@ import { Loader2, LogOut, MailCheck, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/auth-context";
-import {
-  loginWithGoogle,
-  logout,
-  reenviarVerificacion,
-  resetPassword,
-  signInWithEmail,
-  signUpWithEmail,
-  traducirError,
-} from "@/lib/authService";
-
-type Vista = "login" | "registro" | "recuperar";
+import { loginWithGoogle, logout, reenviarVerificacion, traducirError } from "@/lib/authService";
 
 export function AuthPanel() {
   const { user, cargando, emailVerificado, refrescar } = useAuth();
-  const [vista, setVista] = useState<Vista>("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [aviso, setAviso] = useState("");
   const [ocupado, setOcupado] = useState(false);
+
 
   async function ejecutar(fn: () => Promise<void>) {
     setError("");
