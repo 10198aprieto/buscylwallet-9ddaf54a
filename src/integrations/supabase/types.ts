@@ -14,7 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      card_claims: {
+        Row: {
+          card_number: string
+          created_at: string
+          email: string
+          firebase_uid: string
+          id: string
+          nombre_completo: string | null
+          updated_at: string
+        }
+        Insert: {
+          card_number: string
+          created_at?: string
+          email: string
+          firebase_uid: string
+          id?: string
+          nombre_completo?: string | null
+          updated_at?: string
+        }
+        Update: {
+          card_number?: string
+          created_at?: string
+          email?: string
+          firebase_uid?: string
+          id?: string
+          nombre_completo?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
