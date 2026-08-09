@@ -365,6 +365,12 @@ function Index() {
           dispositivo.
         </p>
       </main>
+
+      <footer className="border-t border-border bg-card">
+        <div className="mx-auto max-w-3xl px-5 py-6 text-center text-xs text-muted-foreground">
+          © 2026 Mateo Fernández Prieto. Todos los derechos reservados.
+        </div>
+      </footer>
     </div>
   );
 }
