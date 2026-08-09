@@ -17,3 +17,9 @@ export const createWalletPass = createServerFn({ method: "POST" })
     const saveUrl = await upsertPassAndBuildSaveUrl(data);
     return { saveUrl };
   });
+
+// Script de setup: crea la genericClass una sola vez (idempotente).
+export const setupWalletClass = createServerFn({ method: "POST" }).handler(async () => {
+  const { ensureGenericClass } = await import("./wallet.server");
+  return ensureGenericClass();
+});
