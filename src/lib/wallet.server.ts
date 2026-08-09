@@ -136,7 +136,7 @@ export function buildGenericObject(input: {
     classId: `${input.issuerId}.${CLASS_SUFFIX}`,
     logo: {
       sourceUri: {
-        uri: "https://archive.org/download/buscyl-wallet/buscyl%20logo%20app%20-%202.png",
+        uri: "https://buscylwallet.lovable.app/__l5e/assets-v1/aa19bbf2-9fcb-4844-8bce-caec745f4f11/buscyl-logo.png",
       },
       contentDescription: {
         defaultValue: { language: "es-ES", value: "Logo BusCyL" },
