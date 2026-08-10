@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Loader2, Upload, ScanLine, CheckCircle2, AlertCircle } from "lucide-react";
+import { Loader2, Upload, Camera, ScanLine, CheckCircle2, AlertCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -86,6 +86,7 @@ function Index() {
   const [valorQR, setValorQR] = useState("");
   const [saveUrl, setSaveUrl] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const cameraRef = useRef<HTMLInputElement>(null);
   const { user, emailVerificado } = useAuth();
   const puedeContinuar = Boolean(user) && emailVerificado;
 
@@ -248,17 +249,36 @@ function Index() {
                 ref={inputRef}
                 type="file"
                 accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) void procesarArchivo(file);
+                  e.target.value = "";
+                }}
+              />
+              <input
+                ref={cameraRef}
+                type="file"
+                accept="image/*"
                 capture="environment"
                 className="hidden"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) void procesarArchivo(file);
+                  e.target.value = "";
                 }}
               />
-              <Button variant="brand" size="lg" onClick={() => inputRef.current?.click()}>
-                <Upload className="size-4" />
-                Seleccionar imagen
-              </Button>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Button variant="brand" size="lg" onClick={() => inputRef.current?.click()}>
+                  <Upload className="size-4" />
+                  Subir desde la galería
+                </Button>
+                <Button variant="outline" size="lg" onClick={() => cameraRef.current?.click()}>
+                  <Camera className="size-4" />
+                  Hacer una foto
+                </Button>
+              </div>
+
             </div>
           ) : null}
 
