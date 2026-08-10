@@ -86,6 +86,7 @@ function Index() {
   const [valorQR, setValorQR] = useState("");
   const [saveUrl, setSaveUrl] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const cameraRef = useRef<HTMLInputElement>(null);
   const { user, emailVerificado } = useAuth();
   const puedeContinuar = Boolean(user) && emailVerificado;
 
