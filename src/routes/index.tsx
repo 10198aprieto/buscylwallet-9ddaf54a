@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createWalletPass } from "@/lib/wallet.functions";
 import saveToGooglePay from "@/assets/save-to-google-pay-es.svg";
-import buscylLogo from "@/assets/buscyl-logo.png.asset.json";
+import { SiteFooter } from "@/components/site-footer";
 import { AuthPanel } from "@/components/auth-panel";
 import { useAuth } from "@/contexts/auth-context";
 import { getIdToken } from "@/lib/authService";
@@ -199,7 +199,7 @@ function Index() {
       <header className="bg-brand text-brand-foreground">
         <div className="mx-auto flex max-w-3xl items-center gap-3 px-5 py-5">
           <img
-            src={buscylLogo.url}
+            src="/buscyl-logo.png"
             alt="Logo BusCyL"
             className="size-10 rounded-lg object-cover"
           />
@@ -393,11 +393,8 @@ function Index() {
         </p>
       </main>
 
-      <footer className="border-t border-border bg-card">
-        <div className="mx-auto max-w-3xl px-5 py-6 text-center text-xs text-muted-foreground">
-          © 2026 Mateo Fernández Prieto. Todos los derechos reservados.
-        </div>
-      </footer>
+      <SiteFooter />
+
     </div>
   );
 }

@@ -95,7 +95,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
+    scripts: [
+      {
+        id: "Cookiebot",
+        src: "https://consent.cookiebot.com/uc.js",
+        "data-cbid": "9896caac-c3f0-4071-bf29-1d03dc706ec4",
+        type: "text/javascript",
+        async: true,
+      },
+      { src: "https://www.googletagmanager.com/gtag/js?id=G-2BHJD6LBDT", async: true },
+      {
+        children:
+          "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-2BHJD6LBDT');",
+      },
+    ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

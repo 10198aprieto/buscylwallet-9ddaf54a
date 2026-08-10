@@ -8,7 +8,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { getIdToken } from "@/lib/authService";
 import { listarMisTarjetas, regenerarEnlaceWallet } from "@/lib/cards.functions";
 import saveToGooglePay from "@/assets/save-to-google-pay-es.svg";
-import buscylLogo from "@/assets/buscyl-logo.png.asset.json";
+import { SiteFooter } from "@/components/site-footer";
 
 export const Route = createFileRoute("/mis-tarjetas")({
   head: () => ({
@@ -99,7 +99,12 @@ function MisTarjetas() {
     <div className="min-h-screen bg-background">
       <header className="bg-brand text-brand-foreground">
         <div className="mx-auto flex max-w-3xl items-center gap-3 px-5 py-5">
-          <img src={buscylLogo.url} alt="Logo BusCyL" className="size-10 rounded-lg object-cover" />
+          <img
+            src="/buscyl-logo.png"
+            alt="Logo BusCyL"
+            className="size-10 rounded-lg object-cover"
+          />
+
           <span className="text-sm/5 font-medium opacity-90">
             Junta de Castilla y León · Transporte
           </span>
@@ -219,11 +224,8 @@ function MisTarjetas() {
         {cargando ? null : null}
       </main>
 
-      <footer className="border-t border-border bg-card">
-        <div className="mx-auto max-w-3xl px-5 py-6 text-center text-xs text-muted-foreground">
-          © 2026 Mateo Fernández Prieto. Todos los derechos reservados.
-        </div>
-      </footer>
+      <SiteFooter />
+
     </div>
   );
 }
