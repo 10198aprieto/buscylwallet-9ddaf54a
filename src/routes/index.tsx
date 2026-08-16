@@ -387,10 +387,21 @@ function Index() {
           ) : null}
         </section>
 
+        <section className="mt-8 rounded-2xl border border-border bg-brand-soft/40 p-5">
+          <h2 className="text-base font-semibold text-foreground">
+            ¿Prefieres hacerlo hablando?
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Usa el asistente telefónico con IA: abre el widget de llamada que aparece en la esquina
+            de la pantalla, dile tu número de tarjeta BusCyL y te envía el pase de Google Wallet.
+          </p>
+        </section>
+
         <p className="mt-6 text-xs text-muted-foreground">
           Tus datos solo se envían para generar el pase de Google Wallet. La imagen no sale de tu
           dispositivo.
         </p>
+
       </main>
 
       <SiteFooter />
