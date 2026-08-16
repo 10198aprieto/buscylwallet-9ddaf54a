@@ -108,6 +108,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children:
           "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-2BHJD6LBDT');",
       },
+      {
+        src: "https://arsys.ai-voicereceptionist.com/widget/v1/embed.js",
+        "data-agent-id": "6cc5f19b-b266-4e03-8c25-6331eca165d3",
+        defer: true,
+      },
+
     ],
   }),
 
