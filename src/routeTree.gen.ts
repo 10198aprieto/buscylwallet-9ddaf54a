@@ -15,6 +15,7 @@ import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as MisTarjetasRouteImport } from './routes/mis-tarjetas'
 import { Route as PrivacidadRouteImport } from './routes/privacidad'
+import { Route as ApiPublicGenerarRouteImport } from './routes/api/public/generar'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const PrivacidadRoute = PrivacidadRouteImport.update({
   path: '/privacidad',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicGenerarRoute = ApiPublicGenerarRouteImport.update({
+  id: '/api/public/generar',
+  path: '/api/public/generar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/cookies': typeof CookiesRoute
   '/mis-tarjetas': typeof MisTarjetasRoute
   '/privacidad': typeof PrivacidadRoute
+  '/api/public/generar': typeof ApiPublicGenerarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/cookies': typeof CookiesRoute
   '/mis-tarjetas': typeof MisTarjetasRoute
   '/privacidad': typeof PrivacidadRoute
+  '/api/public/generar': typeof ApiPublicGenerarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/cookies': typeof CookiesRoute
   '/mis-tarjetas': typeof MisTarjetasRoute
   '/privacidad': typeof PrivacidadRoute
+  '/api/public/generar': typeof ApiPublicGenerarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/cookies'
     | '/mis-tarjetas'
     | '/privacidad'
+    | '/api/public/generar'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/cookies'
     | '/mis-tarjetas'
     | '/privacidad'
+    | '/api/public/generar'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/cookies'
     | '/mis-tarjetas'
     | '/privacidad'
+    | '/api/public/generar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   CookiesRoute: typeof CookiesRoute
   MisTarjetasRoute: typeof MisTarjetasRoute
   PrivacidadRoute: typeof PrivacidadRoute
+  ApiPublicGenerarRoute: typeof ApiPublicGenerarRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacidadRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/generar': {
+      id: '/api/public/generar'
+      path: '/api/public/generar'
+      fullPath: '/api/public/generar'
+      preLoaderRoute: typeof ApiPublicGenerarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,7 +182,18 @@ const rootRouteChildren: RootRouteChildren = {
   CookiesRoute: CookiesRoute,
   MisTarjetasRoute: MisTarjetasRoute,
   PrivacidadRoute: PrivacidadRoute,
+  ApiPublicGenerarRoute: ApiPublicGenerarRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
