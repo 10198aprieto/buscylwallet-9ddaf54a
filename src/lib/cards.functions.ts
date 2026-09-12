@@ -61,5 +61,9 @@ export const regenerarEnlaceWallet = createServerFn({ method: "POST" })
 
     const { buildSaveUrlForExistingCard } = await import("./wallet.server");
     const saveUrl = await buildSaveUrlForExistingCard(data.numeroTarjeta);
-    return { saveUrl };
+
+    const { upsertApplePass } = await import("./apple-wallet.server");
+    const applePassBase64 = await upsertApplePass(data.numeroTarjeta);
+
+    return { saveUrl, applePassBase64 };
   });
