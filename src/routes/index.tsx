@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Loader2, Upload, Camera, ScanLine, CheckCircle2, AlertCircle } from "lucide-react";
+import { Loader2, Upload, Camera, ScanLine, CheckCircle2, AlertCircle, Apple } from "lucide-react";
+import { descargarApplePass } from "@/lib/apple-pass";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -85,6 +86,7 @@ function Index() {
   const [numero, setNumero] = useState("");
   const [valorQR, setValorQR] = useState("");
   const [saveUrl, setSaveUrl] = useState("");
+  const [applePass, setApplePass] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
   const { user, emailVerificado } = useAuth();
@@ -171,6 +173,7 @@ function Index() {
         },
       });
       setSaveUrl(res.saveUrl);
+      setApplePass(res.applePassBase64 ?? null);
       setEstado("listo");
     } catch (e) {
       console.error(e);
@@ -191,6 +194,7 @@ function Index() {
     setNumero("");
     setValorQR("");
     setSaveUrl("");
+    setApplePass(null);
     setError("");
   }
 
@@ -380,6 +384,18 @@ function Index() {
                   className="h-14 w-auto"
                 />
               </a>
+              <div className="flex flex-col items-center gap-1">
+                <Button
+                  variant="brand"
+                  size="lg"
+                  disabled={!applePass}
+                  onClick={() => applePass && descargarApplePass(applePass)}
+                >
+                  <Apple className="size-4" />
+                  Añadir a Apple Wallet
+                </Button>
+                <p className="text-xs text-muted-foreground">Disponible solo en iPhone</p>
+              </div>
               <Button variant="ghost" onClick={reiniciar}>
                 Añadir otra tarjeta
               </Button>
