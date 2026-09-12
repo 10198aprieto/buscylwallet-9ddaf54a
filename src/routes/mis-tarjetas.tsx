@@ -221,6 +221,19 @@ function MisTarjetas() {
                     <img src={saveToGooglePay} alt="Guardar en Google Pay" className="h-12 w-auto" />
                   </a>
                 ) : null}
+
+                {applePases[t.numeroTarjeta] ? (
+                  <div className="mt-3 flex flex-col items-start gap-1">
+                    <Button
+                      variant="brand"
+                      onClick={() => descargarApplePass(applePases[t.numeroTarjeta]!)}
+                    >
+                      <Apple className="size-4" />
+                      Añadir a Apple Wallet
+                    </Button>
+                    <p className="text-xs text-muted-foreground">Disponible solo en iPhone</p>
+                  </div>
+                ) : null}
               </article>
             ))}
           </section>
