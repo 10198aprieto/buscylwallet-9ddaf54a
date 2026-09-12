@@ -85,6 +85,7 @@ function Index() {
   const [numero, setNumero] = useState("");
   const [valorQR, setValorQR] = useState("");
   const [saveUrl, setSaveUrl] = useState("");
+  const [applePass, setApplePass] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
   const { user, emailVerificado } = useAuth();
@@ -171,6 +172,7 @@ function Index() {
         },
       });
       setSaveUrl(res.saveUrl);
+      setApplePass(res.applePassBase64 ?? null);
       setEstado("listo");
     } catch (e) {
       console.error(e);
@@ -191,6 +193,7 @@ function Index() {
     setNumero("");
     setValorQR("");
     setSaveUrl("");
+    setApplePass(null);
     setError("");
   }
 
