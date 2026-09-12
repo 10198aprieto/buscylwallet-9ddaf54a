@@ -28,11 +28,7 @@ export const createWalletPass = createServerFn({ method: "POST" })
       numeroTarjeta: data.numeroTarjeta,
       valorQR: data.valorQR,
     });
-
-    const { upsertApplePass } = await import("./apple-wallet.server");
-    const applePassBase64 = await upsertApplePass(data.numeroTarjeta);
-
-    return { saveUrl, email, applePassBase64 };
+    return { saveUrl, email };
   });
 
 // Script de setup: crea la genericClass una sola vez (idempotente).

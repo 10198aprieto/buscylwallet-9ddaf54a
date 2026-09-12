@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { AlertCircle, Apple, ArrowLeft, CreditCard, Loader2, RefreshCw } from "lucide-react";
-import { descargarApplePass } from "@/lib/apple-pass";
+import { AlertCircle, ArrowLeft, CreditCard, Loader2, RefreshCw } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 import { AuthPanel } from "@/components/auth-panel";
@@ -14,17 +13,17 @@ import { SiteFooter } from "@/components/site-footer";
 export const Route = createFileRoute("/mis-tarjetas")({
   head: () => ({
     meta: [
-      { title: "Mis tarjetas BusCyL | Gestiona tus pases de Google Wallet y Apple Wallet" },
+      { title: "Mis tarjetas BusCyL | Gestiona tus pases de Google Wallet" },
       {
         name: "description",
         content:
-          "Consulta las tarjetas de transporte BusCyL asociadas a tu cuenta y vuelve a generar el enlace para añadirlas a Google Wallet o Apple Wallet.",
+          "Consulta las tarjetas de transporte BusCyL asociadas a tu cuenta y vuelve a generar el enlace para añadirlas a Google Wallet.",
       },
       { property: "og:title", content: "Mis tarjetas BusCyL" },
       {
         property: "og:description",
         content:
-          "Gestiona tus tarjetas BusCyL asociadas y recupera el enlace de Google Wallet o Apple Wallet cuando lo necesites.",
+          "Gestiona tus tarjetas BusCyL asociadas y recupera el enlace de Google Wallet cuando lo necesites.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -61,7 +60,6 @@ function MisTarjetas() {
   const [error, setError] = useState("");
   const [regenerando, setRegenerando] = useState("");
   const [enlaces, setEnlaces] = useState<Record<string, string>>({});
-  const [applePases, setApplePases] = useState<Record<string, string>>({});
 
   const cargar = useCallback(async () => {
     setError("");
@@ -89,9 +87,6 @@ function MisTarjetas() {
       const idToken = await getIdToken(true);
       const res = await regenerarEnlaceWallet({ data: { idToken, numeroTarjeta } });
       setEnlaces((prev) => ({ ...prev, [numeroTarjeta]: res.saveUrl }));
-      if (res.applePassBase64) {
-        setApplePases((prev) => ({ ...prev, [numeroTarjeta]: res.applePassBase64! }));
-      }
     } catch (e) {
       console.error(e);
       setError((e as Error)?.message || "No se ha podido generar el enlace.");
@@ -130,7 +125,7 @@ function MisTarjetas() {
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground">
           Aquí puedes ver las tarjetas BusCyL asociadas a tu cuenta y volver a generar el enlace
-          para añadirlas a Google Wallet o Apple Wallet.
+          para añadirlas a Google Wallet.
         </p>
 
         {error ? (
@@ -220,19 +215,6 @@ function MisTarjetas() {
                   >
                     <img src={saveToGooglePay} alt="Guardar en Google Pay" className="h-12 w-auto" />
                   </a>
-                ) : null}
-
-                {applePases[t.numeroTarjeta] ? (
-                  <div className="mt-3 flex flex-col items-start gap-1">
-                    <Button
-                      variant="brand"
-                      onClick={() => descargarApplePass(applePases[t.numeroTarjeta]!)}
-                    >
-                      <Apple className="size-4" />
-                      Añadir a Apple Wallet
-                    </Button>
-                    <p className="text-xs text-muted-foreground">Disponible solo en iPhone</p>
-                  </div>
                 ) : null}
               </article>
             ))}

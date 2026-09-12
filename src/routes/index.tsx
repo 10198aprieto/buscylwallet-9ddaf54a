@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Loader2, Upload, Camera, ScanLine, CheckCircle2, AlertCircle, Apple } from "lucide-react";
-import { descargarApplePass } from "@/lib/apple-pass";
+import { Loader2, Upload, Camera, ScanLine, CheckCircle2, AlertCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,17 +15,17 @@ import { getIdToken } from "@/lib/authService";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "BusCyL en Google Wallet y Apple Wallet | Añade tu tarjeta de transporte" },
+      { title: "BusCyL en Google Wallet | Añade tu tarjeta de transporte" },
       {
         name: "description",
         content:
-          "Sube una foto de tu Tarjeta de Transporte BusCyL y añádela a Google Wallet o Apple Wallet en segundos, con lectura automática del QR y de tus datos.",
+          "Sube una foto de tu Tarjeta de Transporte BusCyL y añádela a Google Wallet en segundos, con lectura automática del QR y de tus datos.",
       },
-      { property: "og:title", content: "BusCyL en Google Wallet y Apple Wallet" },
+      { property: "og:title", content: "BusCyL en Google Wallet" },
       {
         property: "og:description",
         content:
-          "Digitaliza tu Tarjeta de Transporte BusCyL y llévala siempre en el móvil con Google Wallet o Apple Wallet.",
+          "Digitaliza tu Tarjeta de Transporte BusCyL y llévala siempre en el móvil con Google Wallet.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -86,7 +85,6 @@ function Index() {
   const [numero, setNumero] = useState("");
   const [valorQR, setValorQR] = useState("");
   const [saveUrl, setSaveUrl] = useState("");
-  const [applePass, setApplePass] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
   const { user, emailVerificado } = useAuth();
@@ -173,7 +171,6 @@ function Index() {
         },
       });
       setSaveUrl(res.saveUrl);
-      setApplePass(res.applePassBase64 ?? null);
       setEstado("listo");
     } catch (e) {
       console.error(e);
@@ -194,7 +191,6 @@ function Index() {
     setNumero("");
     setValorQR("");
     setSaveUrl("");
-    setApplePass(null);
     setError("");
   }
 
@@ -222,12 +218,8 @@ function Index() {
 
 
       <main className="mx-auto max-w-3xl px-5 pb-20 pt-10">
-        <div className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-3 py-1 text-sm font-medium text-brand">
-          <Apple className="size-4" />
-          Ya disponible para Apple Wallet
-        </div>
-        <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Añade tu Tarjeta BusCyL a Google Wallet o Apple Wallet
+        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          Añade tu Tarjeta BusCyL a Google Wallet
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground">
           Sube una foto de tu tarjeta. Leemos el código QR y tus datos en tu propio navegador y
@@ -388,18 +380,6 @@ function Index() {
                   className="h-14 w-auto"
                 />
               </a>
-              <div className="flex flex-col items-center gap-1">
-                <Button
-                  variant="brand"
-                  size="lg"
-                  disabled={!applePass}
-                  onClick={() => applePass && descargarApplePass(applePass)}
-                >
-                  <Apple className="size-4" />
-                  Añadir a Apple Wallet
-                </Button>
-                <p className="text-xs text-muted-foreground">Disponible solo en iPhone</p>
-              </div>
               <Button variant="ghost" onClick={reiniciar}>
                 Añadir otra tarjeta
               </Button>
@@ -413,12 +393,12 @@ function Index() {
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Usa el asistente telefónico con IA: abre el widget de llamada que aparece en la esquina
-            de la pantalla, dile tu número de tarjeta BusCyL y te envía el pase de Google Wallet o Apple Wallet.
+            de la pantalla, dile tu número de tarjeta BusCyL y te envía el pase de Google Wallet.
           </p>
         </section>
 
         <p className="mt-6 text-xs text-muted-foreground">
-          Tus datos solo se envían para generar el pase de Google Wallet o Apple Wallet. La imagen no sale de tu
+          Tus datos solo se envían para generar el pase de Google Wallet. La imagen no sale de tu
           dispositivo.
         </p>
 
