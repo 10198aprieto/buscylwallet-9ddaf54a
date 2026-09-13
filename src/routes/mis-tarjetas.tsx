@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { AlertCircle, Apple, ArrowLeft, CreditCard, Loader2, RefreshCw } from "lucide-react";
+import { AlertCircle, ArrowLeft, CreditCard, Loader2, RefreshCw } from "lucide-react";
 import { descargarApplePass } from "@/lib/apple-pass";
+import addToAppleWallet from "@/assets/add-to-apple-wallet-es.png.asset.json";
 import { useCallback, useEffect, useState } from "react";
 
 import { AuthPanel } from "@/components/auth-panel";
@@ -224,13 +225,18 @@ function MisTarjetas() {
 
                 {applePases[t.numeroTarjeta] ? (
                   <div className="mt-3 flex flex-col items-start gap-1">
-                    <Button
-                      variant="brand"
+                    <button
+                      type="button"
                       onClick={() => descargarApplePass(applePases[t.numeroTarjeta]!)}
+                      className="inline-block transition-transform hover:scale-[1.02]"
+                      aria-label="Agregar a Apple Wallet"
                     >
-                      <Apple className="size-4" />
-                      Añadir a Apple Wallet
-                    </Button>
+                      <img
+                        src={addToAppleWallet.url}
+                        alt="Agregar a Apple Wallet"
+                        className="h-12 w-auto"
+                      />
+                    </button>
                     <p className="text-xs text-muted-foreground">Disponible solo en iPhone</p>
                   </div>
                 ) : null}

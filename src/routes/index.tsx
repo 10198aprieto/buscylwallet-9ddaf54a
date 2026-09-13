@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Loader2, Upload, Camera, ScanLine, CheckCircle2, AlertCircle, Apple } from "lucide-react";
+import { Loader2, Upload, Camera, ScanLine, CheckCircle2, AlertCircle } from "lucide-react";
 import { descargarApplePass } from "@/lib/apple-pass";
+import addToAppleWallet from "@/assets/add-to-apple-wallet-es.png.asset.json";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -390,15 +391,15 @@ function Index() {
                 />
               </a>
               <div className="flex flex-col items-center gap-1">
-                <Button
-                  variant="brand"
-                  size="lg"
+                <button
+                  type="button"
                   disabled={!applePass}
                   onClick={() => applePass && descargarApplePass(applePass)}
+                  className="inline-block transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-40"
+                  aria-label="Agregar a Apple Wallet"
                 >
-                  <Apple className="size-4" />
-                  Añadir a Apple Wallet
-                </Button>
+                  <img src={addToAppleWallet.url} alt="Agregar a Apple Wallet" className="h-14 w-auto" />
+                </button>
                 <p className="text-xs text-muted-foreground">Disponible solo en iPhone</p>
               </div>
               <Button variant="ghost" onClick={reiniciar}>
