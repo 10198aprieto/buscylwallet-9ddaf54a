@@ -224,13 +224,18 @@ function MisTarjetas() {
 
                 {applePases[t.numeroTarjeta] ? (
                   <div className="mt-3 flex flex-col items-start gap-1">
-                    <Button
-                      variant="brand"
+                    <button
+                      type="button"
                       onClick={() => descargarApplePass(applePases[t.numeroTarjeta]!)}
+                      className="inline-block transition-transform hover:scale-[1.02]"
+                      aria-label="Agregar a Apple Wallet"
                     >
-                      <Apple className="size-4" />
-                      Añadir a Apple Wallet
-                    </Button>
+                      <img
+                        src={addToAppleWallet.url}
+                        alt="Agregar a Apple Wallet"
+                        className="h-12 w-auto"
+                      />
+                    </button>
                     <p className="text-xs text-muted-foreground">Disponible solo en iPhone</p>
                   </div>
                 ) : null}
