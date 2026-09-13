@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { AlertCircle, ArrowLeft, CreditCard, Loader2, RefreshCw } from "lucide-react";
+import { AlertCircle, Apple, ArrowLeft, CreditCard, Loader2, RefreshCw } from "lucide-react";
+import { descargarApplePass } from "@/lib/apple-pass";
 import { useCallback, useEffect, useState } from "react";
 
 import { AuthPanel } from "@/components/auth-panel";
@@ -60,6 +61,7 @@ function MisTarjetas() {
   const [error, setError] = useState("");
   const [regenerando, setRegenerando] = useState("");
   const [enlaces, setEnlaces] = useState<Record<string, string>>({});
+  const [applePases, setApplePases] = useState<Record<string, string>>({});
 
   const cargar = useCallback(async () => {
     setError("");
@@ -87,6 +89,9 @@ function MisTarjetas() {
       const idToken = await getIdToken(true);
       const res = await regenerarEnlaceWallet({ data: { idToken, numeroTarjeta } });
       setEnlaces((prev) => ({ ...prev, [numeroTarjeta]: res.saveUrl }));
+      if (res.applePassBase64) {
+        setApplePases((prev) => ({ ...prev, [numeroTarjeta]: res.applePassBase64! }));
+      }
     } catch (e) {
       console.error(e);
       setError((e as Error)?.message || "No se ha podido generar el enlace.");
@@ -215,6 +220,19 @@ function MisTarjetas() {
                   >
                     <img src={saveToGooglePay} alt="Guardar en Google Pay" className="h-12 w-auto" />
                   </a>
+                ) : null}
+
+                {applePases[t.numeroTarjeta] ? (
+                  <div className="mt-3 flex flex-col items-start gap-1">
+                    <Button
+                      variant="brand"
+                      onClick={() => descargarApplePass(applePases[t.numeroTarjeta]!)}
+                    >
+                      <Apple className="size-4" />
+                      Añadir a Apple Wallet
+                    </Button>
+                    <p className="text-xs text-muted-foreground">Disponible solo en iPhone</p>
+                  </div>
                 ) : null}
               </article>
             ))}
