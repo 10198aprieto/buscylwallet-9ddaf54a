@@ -30,7 +30,11 @@ export const createWalletPass = createServerFn({ method: "POST" })
     });
 
     const { upsertApplePass } = await import("./apple-wallet.server");
-    const applePassBase64 = await upsertApplePass(data.numeroTarjeta);
+    const applePassBase64 = await upsertApplePass({
+      numeroTarjeta: data.numeroTarjeta,
+      nombreCompleto: data.nombreCompleto,
+      valorQR: data.valorQR,
+    });
 
     return { saveUrl, email, applePassBase64 };
   });
