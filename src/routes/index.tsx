@@ -16,17 +16,17 @@ import { getIdToken } from "@/lib/authService";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "BusCyL en Google Wallet | Añade tu tarjeta de transporte" },
+      { title: "BusCyL en Google y Apple Wallet | Añade tu tarjeta" },
       {
         name: "description",
         content:
-          "Sube una foto de tu Tarjeta de Transporte BusCyL y añádela a Google Wallet en segundos, con lectura automática del QR y de tus datos.",
+          "Sube una foto de tu Tarjeta de Transporte BusCyL y añádela a Google Wallet o Apple Wallet en segundos, con lectura automática del QR y de tus datos.",
       },
-      { property: "og:title", content: "BusCyL en Google Wallet" },
+      { property: "og:title", content: "BusCyL en Google y Apple Wallet" },
       {
         property: "og:description",
         content:
-          "Digitaliza tu Tarjeta de Transporte BusCyL y llévala siempre en el móvil con Google Wallet.",
+          "Digitaliza tu Tarjeta de Transporte BusCyL y llévala siempre en el móvil con Google Wallet o Apple Wallet.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -414,12 +414,12 @@ function Index() {
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Usa el asistente telefónico con IA: abre el widget de llamada que aparece en la esquina
-            de la pantalla, dile tu número de tarjeta BusCyL y te envía el pase de Google Wallet.
+            de la pantalla, dile tu número de tarjeta BusCyL y te envía el pase de Google Wallet o Apple Wallet.
           </p>
         </section>
 
         <p className="mt-6 text-xs text-muted-foreground">
-          Tus datos solo se envían para generar el pase de Google Wallet. La imagen no sale de tu
+          Tus datos solo se envían para generar el pase de Google/Apple Wallet. La imagen no sale de tu
           dispositivo.
         </p>
 

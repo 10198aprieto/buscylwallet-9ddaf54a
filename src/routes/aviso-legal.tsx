@@ -36,7 +36,7 @@ function AvisoLegal() {
       </p>
       <p>
         Los nombres, marcas y logotipos «Junta de Castilla y León», «BusCyL», «Google Wallet»,
-        «Google Pay» y cualesquiera otros que aparezcan en el Sitio Web pertenecen a sus respectivos
+        «Google Pay», «Apple Wallet» y cualesquiera otros que aparezcan en el Sitio Web pertenecen a sus respectivos
         titulares y se citan aquí con fines meramente informativos y descriptivos, sin que su uso
         implique relación, patrocinio o aprobación alguna por parte de dichos titulares.
       </p>

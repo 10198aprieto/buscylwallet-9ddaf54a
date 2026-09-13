@@ -14,17 +14,17 @@ import { SiteFooter } from "@/components/site-footer";
 export const Route = createFileRoute("/mis-tarjetas")({
   head: () => ({
     meta: [
-      { title: "Mis tarjetas BusCyL | Gestiona tus pases de Google Wallet" },
+      { title: "Mis tarjetas BusCyL | Gestiona tus pases de Google y Apple Wallet" },
       {
         name: "description",
         content:
-          "Consulta las tarjetas de transporte BusCyL asociadas a tu cuenta y vuelve a generar el enlace para añadirlas a Google Wallet.",
+          "Consulta las tarjetas de transporte BusCyL asociadas a tu cuenta y vuelve a generar el enlace para añadirlas a Google Wallet o Apple Wallet.",
       },
       { property: "og:title", content: "Mis tarjetas BusCyL" },
       {
         property: "og:description",
         content:
-          "Gestiona tus tarjetas BusCyL asociadas y recupera el enlace de Google Wallet cuando lo necesites.",
+          "Gestiona tus tarjetas BusCyL asociadas y recupera el enlace de Google Wallet o Apple Wallet cuando lo necesites.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -130,7 +130,7 @@ function MisTarjetas() {
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground">
           Aquí puedes ver las tarjetas BusCyL asociadas a tu cuenta y volver a generar el enlace
-          para añadirlas a Google Wallet.
+          para añadirlas a Google Wallet o Apple Wallet.
         </p>
 
         {error ? (
