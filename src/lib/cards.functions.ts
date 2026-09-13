@@ -47,7 +47,7 @@ export const regenerarEnlaceWallet = createServerFn({ method: "POST" })
 
     const { data: fila, error } = await supabaseAdmin
       .from("card_claims")
-      .select("firebase_uid")
+      .select("firebase_uid, nombre_completo")
       .eq("card_number", data.numeroTarjeta)
       .maybeSingle();
 
@@ -63,7 +63,10 @@ export const regenerarEnlaceWallet = createServerFn({ method: "POST" })
     const saveUrl = await buildSaveUrlForExistingCard(data.numeroTarjeta);
 
     const { upsertApplePass } = await import("./apple-wallet.server");
-    const applePassBase64 = await upsertApplePass(data.numeroTarjeta);
+    const applePassBase64 = await upsertApplePass({
+      numeroTarjeta: data.numeroTarjeta,
+      nombreCompleto: fila.nombre_completo,
+    });
 
     return { saveUrl, applePassBase64 };
   });
