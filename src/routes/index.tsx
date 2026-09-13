@@ -222,8 +222,8 @@ function Index() {
 
 
       <main className="mx-auto max-w-3xl px-5 pb-20 pt-10">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
         <div className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand-soft px-4 py-1.5 text-sm font-medium text-brand">
+
           ¡Novedad! Ya disponible también para Apple Wallet
         </div>
         <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
