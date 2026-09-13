@@ -223,12 +223,17 @@ function Index() {
 
       <main className="mx-auto max-w-3xl px-5 pb-20 pt-10">
         <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Añade tu Tarjeta BusCyL a Google Wallet
+        <div className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand-soft px-4 py-1.5 text-sm font-medium text-brand">
+          ¡Novedad! Ya disponible también para Apple Wallet
+        </div>
+        <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          Añade tu Tarjeta BusCyL a Google Wallet o Apple Wallet
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground">
           Sube una foto de tu tarjeta. Leemos el código QR y tus datos en tu propio navegador y
-          creamos el pase digital para tu móvil.
+          creamos el pase digital para tu móvil, tanto en Android como en iPhone.
         </p>
+
 
         {error ? (
           <div className="mt-6 flex items-start gap-3 rounded-xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
