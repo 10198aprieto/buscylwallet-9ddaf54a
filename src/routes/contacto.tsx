@@ -9,7 +9,7 @@ export const Route = createFileRoute("/contacto")({
       {
         name: "description",
         content:
-          "¿Dudas o incidencias al añadir tu tarjeta BusCyL a Google Wallet? Escríbenos con el formulario de contacto de buscylwallet.es.",
+          "¿Dudas o incidencias al añadir tu tarjeta BusCyL a Google Wallet o Apple Wallet? Escríbenos con el formulario de contacto de buscylwallet.es.",
       },
       { property: "og:title", content: "Contacto | BusCyL Wallet" },
       {
@@ -27,7 +27,7 @@ function Contacto() {
   return (
     <LegalLayout title="Contacto">
       <p>
-        ¿Tienes dudas, sugerencias o algún problema al añadir tu tarjeta BusCyL a Google Wallet?
+        ¿Tienes dudas, sugerencias o algún problema al añadir tu tarjeta BusCyL a Google Wallet o Apple Wallet?
         Escríbenos a{" "}
         <a className="underline" href="mailto:hola@buscylwallet.es">
           hola@buscylwallet.es

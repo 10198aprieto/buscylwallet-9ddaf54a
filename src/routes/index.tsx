@@ -16,17 +16,17 @@ import { getIdToken } from "@/lib/authService";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "BusCyL en Google Wallet | Añade tu tarjeta de transporte" },
+      { title: "BusCyL en Google y Apple Wallet | Añade tu tarjeta" },
       {
         name: "description",
         content:
-          "Sube una foto de tu Tarjeta de Transporte BusCyL y añádela a Google Wallet en segundos, con lectura automática del QR y de tus datos.",
+          "Sube una foto de tu Tarjeta de Transporte BusCyL y añádela a Google Wallet o Apple Wallet en segundos, con lectura automática del QR y de tus datos.",
       },
-      { property: "og:title", content: "BusCyL en Google Wallet" },
+      { property: "og:title", content: "BusCyL en Google y Apple Wallet" },
       {
         property: "og:description",
         content:
-          "Digitaliza tu Tarjeta de Transporte BusCyL y llévala siempre en el móvil con Google Wallet.",
+          "Digitaliza tu Tarjeta de Transporte BusCyL y llévala siempre en el móvil con Google Wallet o Apple Wallet.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -222,13 +222,18 @@ function Index() {
 
 
       <main className="mx-auto max-w-3xl px-5 pb-20 pt-10">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Añade tu Tarjeta BusCyL a Google Wallet
+        <div className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand-soft px-4 py-1.5 text-sm font-medium text-brand">
+
+          ¡Novedad! Ya disponible también para Apple Wallet
+        </div>
+        <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          Añade tu Tarjeta BusCyL a Google Wallet o Apple Wallet
         </h1>
         <p className="mt-3 max-w-xl text-muted-foreground">
           Sube una foto de tu tarjeta. Leemos el código QR y tus datos en tu propio navegador y
-          creamos el pase digital para tu móvil.
+          creamos el pase digital para tu móvil, tanto en Android como en iPhone.
         </p>
+
 
         {error ? (
           <div className="mt-6 flex items-start gap-3 rounded-xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
@@ -409,12 +414,12 @@ function Index() {
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Usa el asistente telefónico con IA: abre el widget de llamada que aparece en la esquina
-            de la pantalla, dile tu número de tarjeta BusCyL y te envía el pase de Google Wallet.
+            de la pantalla, dile tu número de tarjeta BusCyL y te envía el pase de Google Wallet o Apple Wallet.
           </p>
         </section>
 
         <p className="mt-6 text-xs text-muted-foreground">
-          Tus datos solo se envían para generar el pase de Google Wallet. La imagen no sale de tu
+          Tus datos solo se envían para generar el pase de Google/Apple Wallet. La imagen no sale de tu
           dispositivo.
         </p>
 
