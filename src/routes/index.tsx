@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Loader2, Upload, Camera, ScanLine, CheckCircle2, AlertCircle, Apple } from "lucide-react";
+import { Loader2, Upload, Camera, ScanLine, CheckCircle2, AlertCircle } from "lucide-react";
 import { descargarApplePass } from "@/lib/apple-pass";
+import addToAppleWallet from "@/assets/add-to-apple-wallet-es.png.asset.json";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
