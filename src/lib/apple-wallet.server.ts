@@ -2,7 +2,7 @@ const API_BASE = "https://api.walletwallet.dev/api/passes";
 
 const BRAND_COLOR = "#ba0c2f";
 const LOGO_URL =
-  "https://buscylwallet.es/__l5e/assets-v1/aa19bbf2-9fcb-4844-8bce-caec745f4f11/buscyl-logo.png";
+  "https://buscylwallet.es/buscyl-logo.png";
 const HERO_URL =
   "https://ia903205.us.archive.org/32/items/hero-image-buscyl-2/HERO%20IMAGE%20BUSCYL%20%282%29.png";
 

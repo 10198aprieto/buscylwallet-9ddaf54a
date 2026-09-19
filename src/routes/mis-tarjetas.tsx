@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AlertCircle, ArrowLeft, CreditCard, Loader2, RefreshCw } from "lucide-react";
 import { descargarApplePass } from "@/lib/apple-pass";
-import addToAppleWallet from "@/assets/add-to-apple-wallet-es.png.asset.json";
 import { useCallback, useEffect, useState } from "react";
 
 import { AuthPanel } from "@/components/auth-panel";
@@ -232,7 +231,7 @@ function MisTarjetas() {
                       aria-label="Agregar a Apple Wallet"
                     >
                       <img
-                        src={addToAppleWallet.url}
+                        src="/add-to-apple-wallet-es.png"
                         alt="Agregar a Apple Wallet"
                         className="h-12 w-auto"
                       />
