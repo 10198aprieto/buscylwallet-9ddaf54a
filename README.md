@@ -87,3 +87,50 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Despliegue en Firebase Hosting
+
+Este proyecto se construye con `vite build` (TanStack Start + Nitro) y genera salida en:
+
+- `.output/public` (assets estáticos para hosting)
+- `.output/server` (runtime SSR de Nitro)
+
+### Pasos
+
+1. Instalar o actualizar Firebase CLI:
+
+```sh
+npm install -g firebase-tools
+```
+
+2. Autenticarse en Firebase:
+
+```sh
+firebase login
+```
+
+3. Asociar el proyecto Firebase al repo:
+
+```sh
+firebase use --add
+```
+
+> Si usas la configuración incluida, el proyecto por defecto es `tarjeta-buscyl` (`.firebaserc`).
+
+4. Generar el build:
+
+```sh
+npm run build
+```
+
+5. Desplegar Hosting:
+
+```sh
+firebase deploy --only hosting
+```
+
+### Limitaciones importantes
+
+- `firebase.json` está configurado para publicar `.output/public`.
+- Este repositorio genera también `.output/server` para SSR con Nitro.
+- Con **Firebase Hosting (solo hosting estático)** no se despliega ese backend SSR automáticamente; para SSR real se necesita una integración backend compatible adicional (no incluida en este cambio).
