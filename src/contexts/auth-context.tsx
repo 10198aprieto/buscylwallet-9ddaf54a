@@ -28,8 +28,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     void (async () => {
       try {
         const auth = await getFirebaseAuth();
-        const { onAuthStateChanged } = await import("firebase/auth");
+        const { onAuthStateChanged, getRedirectResult } = await import("firebase/auth");
         if (!activo) return;
+        getRedirectResult(auth).catch((e) => console.error("Google redirect error", e));
         cancelar = onAuthStateChanged(auth, (u) => {
           setUser(u);
           setCargando(false);
