@@ -13,6 +13,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { FirebaseAnalytics } from "../components/firebase-analytics";
 import { AuthProvider } from "../contexts/auth-context";
+import { MaintenanceScreen } from "../components/maintenance-screen";
+import { getMaintenanceAccess } from "../lib/maintenance.functions";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -118,6 +120,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
   }),
 
+  beforeLoad: async () => ({ acceso: await getMaintenanceAccess() }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -139,7 +142,8 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
+  const { queryClient, acceso } = Route.useRouteContext();
+  if (!acceso.permitido) return <MaintenanceScreen />;
 
   return (
     <QueryClientProvider client={queryClient}>
