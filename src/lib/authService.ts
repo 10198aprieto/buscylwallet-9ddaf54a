@@ -30,17 +30,37 @@ function mensajeError(code: string): string {
 
 export function traducirError(error: unknown): string {
   const code = (error as { code?: string } | null)?.code;
-  if (code) return mensajeError(code);
+  if (code === "auth/unauthorized-domain" && typeof window !== "undefined") {
+    return `El dominio ${window.location.hostname} no está autorizado. Añádelo en Firebase → Authentication → Settings → Dominios autorizados.`;
+  }
+  if (code) {
+    const base = mensajeError(code);
+    return base.startsWith("No se ha podido") ? `${base} (${code})` : base;
+  }
   return (error as Error)?.message || "Se ha producido un error inesperado.";
 }
 
-/** Inicio de sesión con Google mediante ventana emergente. */
+/** Inicio de sesión con Google: ventana emergente y, si se bloquea, redirección. */
 export async function loginWithGoogle() {
   const auth = await getFirebaseAuth();
   const provider = await getGoogleProvider();
-  const { signInWithPopup } = await import("firebase/auth");
-  const result = await signInWithPopup(auth, provider);
-  return result.user;
+  const { signInWithPopup, signInWithRedirect } = await import("firebase/auth");
+  try {
+    const result = await signInWithPopup(auth, provider);
+    return result.user;
+  } catch (e) {
+    const code = (e as { code?: string }).code;
+    console.error("Google sign-in error", code, e);
+    if (
+      code === "auth/popup-blocked" ||
+      code === "auth/operation-not-supported-in-this-environment" ||
+      code === "auth/web-storage-unsupported"
+    ) {
+      await signInWithRedirect(auth, provider);
+      return null;
+    }
+    throw e;
+  }
 }
 
 /** Registro con email + envío del correo de verificación. */
