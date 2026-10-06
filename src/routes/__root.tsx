@@ -143,7 +143,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient, acceso } = Route.useRouteContext();
-  if (!acceso.permitido) return <MaintenanceScreen />;
+  if (!acceso?.permitido) return <MaintenanceScreen />;
 
   return (
     <QueryClientProvider client={queryClient}>
